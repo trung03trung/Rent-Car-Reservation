@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+    <div th:fragment="carCost" id="carCost">
+        <div class="alert alert-danger" style="font-size:15px" th:if="${reservation.dates.totalNights() < 0}" >Không thể tính tiền,hãy đảm bảo rằng các trường hợp lệ</div>
+        <div th:unless="${reservation.dates.totalNights() < 0}" class="d-flex align-items-center bg-light p-3">
+            <span style="color:red;">Số ngày thuê</span>
+            <span href="contact.html" class="ml-auto btn btn-primary" th:text="${reservation.dates.totalNights()}"></span>
+        </div>
+     <div class="d-flex align-items-center bg-light p-3" th:unless="${reservation.dates.totalNights() < 0}">
+        <span style="color:red;">Tổng phí thuê xe</span>
+        <span href="contact.html" th:text="${reservation.getTotalCarCostWithLateCheckOutFee()}" class="ml-auto btn btn-primary"></span>
+     </div>
+        <div class="d-flex align-items-center bg-light p-3" th:unless="${reservation.dates.totalNights() < 0}">
+            <span style="color:red;">Tổng cộng</span>
+            <span href="contact.html" th:text="${reservation.getTotalCost()}" class="ml-auto btn btn-primary"></span>
+        </div>
+    </div>
+
+</body>
+</html>
