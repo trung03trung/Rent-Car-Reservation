@@ -118,5 +118,8 @@ public class Reservation {
     public String getTotalCost(){
         return car.setCostString(getTotalCarCost()+50000+100000);
     }
+    public long getTotalCostInt(){
+        return getTotalCarCost()+50000+100000;
+    }
 
 }

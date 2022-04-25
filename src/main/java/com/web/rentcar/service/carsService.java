@@ -23,5 +23,18 @@ public class carsService {
                 : Sort.by(sortField).descending());
         return carsRepo.findAll(pageable);
     }
+    public String setCostString(long cost) {
+        String costString=Long.toString(cost);
+        String tmp="";
+        int index=1;
+        for(int i=costString.length()-1;i>=0;i-- ) {
+            tmp +=costString.charAt(i);
+            if (index % 3 == 0 && i != 0) {
+                tmp += ",";
+            }
+            index++;
+        }
+        return  costString= String.valueOf(new StringBuffer(tmp).reverse());
+    }
 
 }

@@ -2,6 +2,9 @@ package com.web.rentcar.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "cars")
@@ -40,8 +43,7 @@ public class cars {
     @Column
     private String transmission;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Reservation reservation;
+
     public cars(){
 
     }
@@ -165,14 +167,7 @@ public class cars {
         this.lateCheckOutFee = lateCheckOutFee;
     }
 
-    public Reservation getReservation() {
-        return reservation;
-    }
 
-    public void setReservation(Reservation reservation) {
-        if (reservation != null) {
-            this.reservation = reservation;
-            reservation.setCar(this);
-        }
-    }
+
+
 }

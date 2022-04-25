@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @SessionAttributes("reservation")
@@ -52,7 +51,7 @@ public class ReservationController {
         cars car=carsRepository.findById(id);
         this.carid=id;
         model.addAttribute("car",car);
-        car.setReservation(reservation);
+        reservation.setCar(car);
         return "reservation";
     }
     @PostMapping("/reservation/car_{id}")
