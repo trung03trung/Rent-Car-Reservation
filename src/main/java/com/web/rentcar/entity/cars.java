@@ -43,7 +43,8 @@ public class cars {
     @Column
     private String transmission;
 
-
+    @OneToOne(cascade = CascadeType.ALL)
+    private Reservation reservation;
     public cars(){
 
     }
@@ -157,6 +158,16 @@ public class cars {
             index++;
         }
         return  costString= String.valueOf(new StringBuffer(tmp).reverse());
+    }
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        if (reservation != null) {
+            this.reservation = reservation;
+            reservation.setCar(this);
+        }
     }
 
     public int getLateCheckOutFee() {

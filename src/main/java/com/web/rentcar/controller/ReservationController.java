@@ -10,6 +10,7 @@ import com.web.rentcar.repository.usersRepository;
 import com.web.rentcar.service.UserServiceImp;
 import com.web.rentcar.service.carsService;
 import com.web.rentcar.service.customUserDetails;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -51,7 +52,8 @@ public class ReservationController {
         cars car=carsRepository.findById(id);
         this.carid=id;
         model.addAttribute("car",car);
-        reservation.setCar(car);
+        Optional<cars> maybeCar= Optional.ofNullable(carsRepository.findById(id));
+        maybeCar.get().setReservation(reservation);
         return "reservation";
     }
     @PostMapping("/reservation/car_{id}")

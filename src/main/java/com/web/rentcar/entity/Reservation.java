@@ -34,10 +34,13 @@ public class Reservation {
     private LocalDateTime createdTime=LocalDateTime.now();
 
     @Column(nullable = false)
-    private String status="Đang chờ xác nhận";
+    private boolean status=false;
 
     @Column(nullable = false)
     private String phonenum;
+
+    @Column(nullable=false)
+    private boolean payment=false;
 
     public Reservation(){
 
@@ -83,11 +86,11 @@ public class Reservation {
         this.createdTime = createdTime;
     }
 
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -97,6 +100,14 @@ public class Reservation {
 
     public void setPhonenum(String phonenum) {
         this.phonenum = phonenum;
+    }
+
+    public boolean isPayment() {
+        return payment;
+    }
+
+    public void setPayment(boolean payment) {
+        this.payment = payment;
     }
 
     public boolean hasUser(){

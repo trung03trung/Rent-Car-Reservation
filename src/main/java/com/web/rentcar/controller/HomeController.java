@@ -85,7 +85,7 @@ public class HomeController {
        Page<cars> listCar=carsRepository.findAllByName(name,pageable);
 
 
-        model.addAttribute("cars",listCar);
+        model.addAttribute("cars",listCar.getContent());
         return "search";
 
     }
