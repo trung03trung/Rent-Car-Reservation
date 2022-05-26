@@ -19,7 +19,7 @@ public class carsService {
 
     public Page<cars> listAll(int pageNum,String sortField,String sortDir){
         Sort sort=Sort.by("name").ascending();
-        Pageable pageable= PageRequest.of(pageNum-1,2, sortDir.equals("asc") ? Sort.by(sortField).ascending()
+        Pageable pageable= PageRequest.of(pageNum-1,3, sortDir.equals("asc") ? Sort.by(sortField).ascending()
                 : Sort.by(sortField).descending());
         return carsRepo.findAll(pageable);
     }
@@ -36,5 +36,6 @@ public class carsService {
         }
         return  costString= String.valueOf(new StringBuffer(tmp).reverse());
     }
+
 
 }

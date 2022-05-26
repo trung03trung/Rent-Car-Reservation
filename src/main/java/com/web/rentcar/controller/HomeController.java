@@ -3,10 +3,7 @@ package com.web.rentcar.controller;
 import com.web.rentcar.CustomUserDetails.CustomUserDetails;
 import com.web.rentcar.entity.*;
 import com.web.rentcar.repository.reservationRepository;
-import com.web.rentcar.service.UserService;
-import com.web.rentcar.service.UserServiceImp;
-import com.web.rentcar.service.carsService;
-import com.web.rentcar.service.customUserDetails;
+import com.web.rentcar.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
@@ -15,7 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.*;
 import com.web.rentcar.repository.usersRepository;
 
@@ -46,6 +43,8 @@ public class HomeController {
     @Autowired
     private reservationRepository reservationRepo;
 
+    @Autowired
+    private reservationService reservationService;
     public HomeController(UserServiceImp userService){
         this.userService=userService;
 
@@ -53,13 +52,27 @@ public class HomeController {
 
 
     @GetMapping("/" )
-    public String Home(){
+    public String Home(Model model){
+        Set<cars> carsSet=reservationService.sortedReservation();
+        List<cars> Cars=new ArrayList<>();
+
+        int count=0;
+        for(cars i:carsSet){
+            Cars.add(i);
+            count++;
+            if(count==3)
+                break;
+        }
+        System.out.println(Cars);
+        model.addAttribute("page","home");
+        model.addAttribute("cars",Cars);
         return "index";
 
     }
 
     @GetMapping("/home")
-    public String Index(){
+    public String Index(Model model){
+        model.addAttribute("page","home");
         return "index";
     }
 
@@ -72,7 +85,6 @@ public class HomeController {
         int costMin=Integer.parseInt(cost[0]);
         int costMax=Integer.parseInt(cost[1]);
         Page<cars> results= carsRepository.findAllByType(type,brand,costMin,costMax,pageable);
-
         model.addAttribute("cars",results==null? Page.empty():results);
         model.addAttribute("type",null);
         return "search";
@@ -84,8 +96,7 @@ public class HomeController {
                          Model model,Pageable pageable){
        Page<cars> listCar=carsRepository.findAllByName(name,pageable);
 
-
-        model.addAttribute("cars",listCar.getContent());
+        model.addAttribute("cars",listCar);
         return "search";
 
     }
@@ -93,13 +104,13 @@ public class HomeController {
     @GetMapping( "/add")
     public String insertCars(){
         cars c1=new cars("Mercedes-AMG G63","Mercedes-Benz",
-                     "5 chỗ",3000000,500000,"","Mercedes-Benz_G63_AMG.jpg","100,000","Số tự động");
+                     "5 chỗ",3000000,500000,"","Mercedes-Benz_G63_AMG.jpg","2021","Số tự động");
 
         cars c2=new cars("Lamborghini Aventador LP 700-4","Lamborghini",
-                "2 chỗ",2500000,500000,"","Lamborghini_Aventador_3.jpg","40,000","Số tự động");
+                "2 chỗ",2500000,500000,"","Lamborghini_Aventador_3.jpg","2019","Số tự động");
 
         cars c3=new cars("Huyndai Accent 2020","Huyndai",
-                "5 chỗ",700000,500000,"","Hyndai_Accent.jpg","300,000","Số sàn");
+                "5 chỗ",700000,500000,"","Hyndai_Accent.jpg","2021","Số sàn");
         List<cars> car= Arrays.asList(c1,c2,c3);
 
         carsRepository.saveAll(car);
@@ -134,6 +145,7 @@ public class HomeController {
 
     @GetMapping("/car")
     public String allCar(Model model) {
+        model.addAttribute("page","car");
         return viewPage(model, 1,"name","asc");
     }
 
@@ -144,7 +156,7 @@ public class HomeController {
         List<cars> listCars=page.getContent();
 
         int totalPages=page.getTotalPages();
-        model.addAttribute("cars",page==null? Page.empty():page);
+
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages",totalPages);
         model.addAttribute("sortField", sortField);
@@ -153,7 +165,7 @@ public class HomeController {
         model.addAttribute("listCars",listCars);
 
 
-
+        model.addAttribute("page","car");
 
         return "car";
     }

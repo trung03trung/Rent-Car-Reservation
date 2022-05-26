@@ -46,9 +46,9 @@
                     <div class="col-md-6">
                     <div class="form-group">
                         <label>Loại xe</label>
-                        <select class="form-control form-control-lg" data-style="btn-outline-secondary btn-lg" title="Not Chosen" th:field="*{type}">
+                        <select class="form-control" data-style="btn-outline-secondary btn-lg" title="Not Chosen" th:field="*{type}">
                             <option value="2 chỗ">2 chỗ</option>
-                            <option value="5 chỗ">4 đến 5 chỗ</option>
+                            <option value="4 đến 5 chỗ">4 đến 5 chỗ</option>
                             <option value="7 chỗ">7 chỗ</option>
                         </select>
                     </div>
@@ -61,8 +61,8 @@
                 </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Số km đã đi</label>
-                            <input class="form-control" type="text" th:field="*{mileage}" >
+                            <label for="example-text-input" class="form-control-label">Năm phát hành</label>
+                            <input class="form-control" type="text" th:field="*{year}" >
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -85,7 +85,9 @@
                     </div>
                     <input type="submit" class="btn btn-primary" value="Save">
                 </form>
-            </div>
+
+         </div>
+        </div>
     </div>
 </div>
 <div class="fixed-plugin">

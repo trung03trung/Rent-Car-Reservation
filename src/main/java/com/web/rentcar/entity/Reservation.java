@@ -114,7 +114,7 @@ public class Reservation {
         return true;
     }
     public int getChargeableLateCheckoutFee() {
-        return dates.isLateCheckOut() ? car.getLateCheckOutFee() :0;
+        return dates.isLateCheckOut() ? 500000 :0;
     }
     public long getTotalCarCost(){
         long days= dates.totalNights();

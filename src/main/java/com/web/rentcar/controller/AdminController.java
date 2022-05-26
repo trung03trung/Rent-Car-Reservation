@@ -7,8 +7,8 @@ import com.web.rentcar.repository.carsRepository;
 import com.web.rentcar.repository.reservationRepository;
 import com.web.rentcar.repository.usersRepository;
 import com.web.rentcar.service.carsService;
+import com.web.rentcar.service.reservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -34,6 +34,9 @@ public class AdminController {
     private carsService carsService;
 
     @Autowired
+    private reservationService reservationService;
+
+    @Autowired
     private carsRepository carsRepo;
     private cars cars;
     @GetMapping("/admin")
@@ -41,8 +44,6 @@ public class AdminController {
         List<Reservation> reservations=reservationRepo.findAll();
         long sum=0;
         int quantity=0;
-        Set<cars> setCar=new HashSet<>();
-        Map<cars,Integer> mapCar=new HashMap<>();
         for(Reservation i:reservations){
             if(i.getDates().getCheckOutDate().getMonthValue()== LocalDateTime.now().getMonthValue()&&i.isPayment())
                 sum+=i.getTotalCostInt();
@@ -52,21 +53,9 @@ public class AdminController {
         for(Reservation i:reservations){
             if(i.isPayment()) {
                 total += i.getTotalCostInt();
-                setCar.add(i.getCar());
             }
         }
-        int count=0;
-       for(cars i:setCar){
-           count=0;
-           for(Reservation j:reservations){
-               if(i==j.getCar())
-                   count++;
-           }
-           mapCar.put(i,count);
-       }
-        Map<cars,Integer> carSorted=mapCar.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-       Set set=carSorted.keySet();
+
         List<Users> users=usersRepo.findAll();
         String sumString= carsService.setCostString(sum);
         String totalString=carsService.setCostString(total);
@@ -74,22 +63,27 @@ public class AdminController {
         model.addAttribute("quantity",quantity);
         model.addAttribute("numberUser",users.size());
         model.addAttribute("total",totalString);
-        model.addAttribute("keySetCars",set);
-        model.addAttribute("mapCars",carSorted);
+        model.addAttribute("keySetCars",reservationService.sortedReservation());
+        model.addAttribute("mapCars",reservationService.sortedReservationMap());
+        model.addAttribute("page","dashboard");
         return "admin/dashboard";
     }
     @GetMapping("/admin/tables")
     public String Table(Model model, Pageable pageable){
         Page<cars> car=carsRepo.findAll(pageable);
         List<Reservation> reservations=reservationRepo.findAll();
+        List<Users> user=usersRepo.findAll();
         model.addAttribute("cars",car.getContent());
         model.addAttribute("reservations",reservations);
+        model.addAttribute("users",user);
+        model.addAttribute("page","tables");
         return "admin/tables";
     }
 
     @GetMapping("/admin/create")
     public String Create(Model model){
         model.addAttribute("car",new cars());
+        model.addAttribute("page","tables");
         return "admin/CRUD-car";
     }
     @PostMapping("/admin/save")
@@ -103,6 +97,7 @@ public class AdminController {
     public String ShowEditForm(@PathVariable("id") long id,Model model){
         cars car=carsRepo.findById(id);
         model.addAttribute("car",car);
+        model.addAttribute("page","tables");
         return "admin/CRUD-car";
     }
     @GetMapping("/admin/delete/{id}")
@@ -120,6 +115,7 @@ public class AdminController {
             if(i.isPayment()==false||i.isStatus()==false)
                 reservations.add(i);
         }
+        model.addAttribute("page","orders");
         model.addAttribute("reservations",reservations);
         return "admin/order.html";
 
@@ -129,7 +125,7 @@ public class AdminController {
     public String ShowEditFormReservation(@PathVariable("id") long id,Model model){
         Reservation reservation=reservationRepo.findById(id);
         model.addAttribute("reservation",reservation);
-
+        model.addAttribute("page","orders");
         return "admin/CRUD-order";
     }
     @PostMapping("/admin/save-reservation")
@@ -149,6 +145,27 @@ public class AdminController {
     @GetMapping("/admin/delete-reservation/{id}")
     public String DeleteReservation(@PathVariable("id") long id,RedirectAttributes ra){
         reservationRepo.deleteById(id);
+        ra.addFlashAttribute("message","Xoá thành công");
+        return "redirect:/admin/tables";
+
+    }
+    @GetMapping("/admin/user/{id}")
+    public String ShowEditFormUser(@PathVariable("id") long id,Model model){
+        Users user=usersRepo.findById(id);
+        model.addAttribute("user",user);
+        model.addAttribute("page","tables");
+        return "admin/CRUD-user";
+    }
+    @PostMapping("/admin/save-user")
+    public String SaveUser(Users user, RedirectAttributes ra){
+        usersRepo.save(user);
+        ra.addFlashAttribute("message","Thêm thành công");
+        return "redirect:/admin/tables";
+
+    }
+    @GetMapping("/admin/delete-user/{id}")
+    public String DeleteUser(@PathVariable("id") long id,RedirectAttributes ra){
+        usersRepo.deleteById(id);
         ra.addFlashAttribute("message","Xoá thành công");
         return "redirect:/admin/tables";
 

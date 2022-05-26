@@ -32,7 +32,7 @@ public class Users {
     private boolean locked;
 
     @Column
-    private boolean enable;
+    private boolean enable=true;
 
 
     public Users(){
@@ -46,6 +46,14 @@ public class Users {
         this.address = address;
         this.locked = locked;
         this.enable = enable;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {

@@ -105,7 +105,8 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">[[${reservation.user.email}]]</h6>
+                                                <h6 class="mb-0 text-sm">[[${reservation.user.name}]]</h6>
+                                                <p class="text-xs text-secondary mb-0">[[${reservation.user.email}]]</p>
                                             </div>
                                         </div>
                                     </td>
@@ -129,6 +130,65 @@
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                 <a class="dropdown-item" th:href="@{'/admin/reservation/'+${reservation.id}}"><i class="fas fa-pencil-alt text-dark me-2"></i> Edit</a>
                                                 <a class="dropdown-item"  th:href="@{'/admin/delete-reservation/'+${reservation.id}}" ><i class="far fa-trash-alt me-2"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header pb-0">
+                        <h6>Bảng Users</h6>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên và email</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Quền truy cập</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Địa chỉ</th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user:${users}">
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">[[${user.name}]]</h6>
+                                                <p class="text-xs text-secondary mb-0">[[${user.email}]]</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">[[${user.role}]]</p>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        <span th:if="${user.enable}" class="badge badge-sm bg-gradient-success">Enable</span>
+                                        <span th:unless="${user.enable}" class="badge badge-sm bg-gradient-secondary">Disable</span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">[[${user.address}]]</span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="dropdown">
+                                            <a class="btn btn-link font-24 p-0 line-height-1 dropdown-toggle" role="button" data-toggle="dropdown">
+                                                <i class="fa fa-ellipsis-v text-xs"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-left dropdown-menu-icon-list">
+                                                <a class="dropdown-item" th:href="@{'/admin/user/'+${user.id}}"><i class="fas fa-pencil-alt text-dark me-2"></i> Edit</a>
+                                                <a class="dropdown-item"  th:href="@{'/admin/delete-user/'+${user.id}}"><i class="far fa-trash-alt me-2"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>

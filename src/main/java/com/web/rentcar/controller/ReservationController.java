@@ -78,9 +78,10 @@ public class ReservationController {
 
     }
     @GetMapping("/reservation/review")
-    public String reservationReview(Model model){
-        List<Reservation> listReservation=reservationRepo.findAll();
+    public String reservationReview(Model model,@AuthenticationPrincipal customUserDetails user){
+        List<Reservation> listReservation=reservationRepo.findByUser(user.getUser());
         model.addAttribute("listReservation",listReservation);
+        model.addAttribute("page","reservation");
         return "reservation-review";
     }
     @GetMapping("/reservation/review/{id}")

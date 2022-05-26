@@ -20,11 +20,13 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a th:href="@{/}" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-                <li class="nav-item"><a th:href="@{/reservation/review}" class="nav-link">Xe đã thuê</a></li>
-                <li class="nav-item"><a th:href="@{/car}" class="nav-link">Cars</a></li>
+                <li th:if="${page=='home'}" class="nav-item active"><a th:href="@{/}" class="nav-link">Home</a></li>
+                <li th:unless="${page=='home'}" class="nav-item"><a th:href="@{/}" class="nav-link">Home</a></li>
+                <li th:if="${page=='reservation'}" class="nav-item active"><a th:href="@{/reservation/review}" class="nav-link">Xe đã thuê</a></li>
+                <li th:unless="${page=='reservation'}" class="nav-item"><a th:href="@{/reservation/review}" class="nav-link">Xe đã thuê</a></li>
+                <li th:if="${page=='car'}" class="nav-item active"><a th:href="@{/car}" class="nav-link">Cars</a></li>
+                <li th:unless="${page=='car'}" class="nav-item"><a th:href="@{/car}" class="nav-link">Cars</a></li>
+
                 <li class="sign_btn" sec:authorize="isAuthenticated()"><a th:href="@{/logout}" class="nav-link" style="color: black;" onMouseOver="this.style.color='#01d28e'" onMouseOut="this.style.color='black'">Đăng xuất</a></li>
                 <li class="sign_btn" sec:authorize="!isAuthenticated()"><a th:href="@{/login}" class="nav-link" style="color: black;" onMouseOver="this.style.color='#01d28e'" onMouseOut="this.style.color='black'">Đăng nhập</a></li>
             </ul>
@@ -61,30 +63,17 @@
             <div class="col-md-12">
                 <div class="titlepage">
                     <h2>VARIETY OF CARS </h2>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</span>
+                    <span>Top xe được thuê nhiều nhất</span>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 padding_leri">
+            <div class="col-md-4 padding_leri" th:each="car:${cars}">
                 <div class="car_box">
-                    <figure><img th:src="@{/images/car_img1.png}" alt="#"/></figure>
-                    <h3>Hundai</h3>
+                    <figure><img th:src="@{static2/images/{image}(image=${car.image})}" alt="#"/></figure>
+                    <h3>[[${car.name}]]</h3>
                 </div>
             </div>
-            <div class="col-md-4 padding_leri">
-                <div class="car_box">
-                    <figure><img th:src="@{/images/car_img2.png}" alt="#"/></figure>
-                    <h3>Audi</h3>
-                </div>
-            </div>
-            <div class="col-md-4 padding_leri">
-                <div class="car_box">
-                    <figure><img th:src="@{/images/car_img3.png}" alt="#"/></figure>
-                    <h3>Bmw x5</h3>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <!-- end car -->
@@ -107,18 +96,19 @@
                                 <div class="col-md-12" >
                                     <select name="brand">
                                         <option value="" selected disabled hidden>Hãng xe</option>
-                                        <option value="1">Chervelet</option>
-                                        <option value="2">Mazda</option>
-                                        <option value="3">Mercedes-benz</option>
+                                        <option>Lamborghini</option>
+                                        <option>Mazda</option>
+                                        <option>Mercedes-Benz</option>
+                                        <option>Rolls Royce</option>
                                     </select>
                                 </div>
                                 <div class="col-md-12" >
                                     <select name="costSearch">
-                                        <option value="0 9000000">Giá tiền 1 ngày </option>
-                                        <option value="0 1000000">Dưới 1 triệu đồng</option>
-                                        <option value="1000000 2000000">Từ 1 triệu đến 2 triệu đồng</option>
-                                        <option value="2000000 3000000">Từ 2 triệu đến 3 triệu đồng</option>
-                                        <option value="3000000 9000000">Trên 3 triệu đồng</option>
+                                        <option value="0 9000000">Giá tiền</option>
+                                        <option value="0 2000000">Dưới 2 triệu đồng</option>
+                                        <option value="2000000 4000000">Từ 2 triệu đến 4 triệu đồng</option>
+                                        <option value="4000000 5000000">Từ 4 triệu đến 5 triệu đồng</option>
+                                        <option value="5000000 9000000">Trên 5 triệu đồng</option>
                                     </select>
                                 </div>
 
@@ -127,6 +117,7 @@
                                     <select name="type">
                                         <option value="" selected disabled hidden>Loại xe</option>
                                         <option value="2 chỗ">2 chỗ</option>
+                                        <option value="4 đến 5 chỗ">4 đến 5 chỗ</option>
                                         <option value="7 chỗ">7 chỗ</option>
                                         <option value="Bán tải">Bán tải</option>
                                     </select>
@@ -211,6 +202,7 @@
 <script>
 
 </script>
+
 </body>
 </html>
 

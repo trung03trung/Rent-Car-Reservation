@@ -23,13 +23,10 @@ public class cars {
     private String type;
 
 
-    @Column
+    @Column(nullable = false)
     private int cost;
 
 
-
-    @Column
-    private int lateCheckOutFee;
 
     @Column
     private String description;
@@ -38,7 +35,7 @@ public class cars {
     private String image;
 
     @Column
-    private String mileage;
+    private String year;
 
     @Column
     private String transmission;
@@ -48,15 +45,14 @@ public class cars {
     public cars(){
 
     }
-    public cars(String name, String brand, String type, int cost,int lateCheckOutFee, String description, String image,String mileage,String transmission) {
+    public cars(String name, String brand, String type, int cost,int lateCheckOutFee, String description, String image,String year,String transmission) {
         this.name = name;
         this.brand = brand;
         this.type = type;
         this.cost = cost;
-        this.lateCheckOutFee=lateCheckOutFee;
         this.description = description;
         this.image = image;
-        this.mileage=mileage;
+        this.year=year;
         this.transmission=transmission;
     }
 
@@ -117,12 +113,12 @@ public class cars {
         this.image = image;
     }
 
-    public String getMileage() {
-        return mileage;
+    public String getYear() {
+        return year;
     }
 
-    public void setMileage(String mileage) {
-        this.mileage = mileage;
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getTransmission() {
@@ -170,13 +166,7 @@ public class cars {
         }
     }
 
-    public int getLateCheckOutFee() {
-        return lateCheckOutFee;
-    }
-
-    public void setLateCheckOutFee(int lateCheckOutFee) {
-        this.lateCheckOutFee = lateCheckOutFee;
-    }
+   
 
 
 

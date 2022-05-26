@@ -28,17 +28,10 @@
 
 <section class="ftco-section bg-light">
     <div class="container">
-        <div class="product-item-filter row">
-            <div class="col-12 col-sm-8 text-center text-sm-left">
-                <div class="toolbar-sorter-right">
-                    <span>Kết quả tìm kiếm</span>
-                </div>
 
-            </div>
-        </div>
 
         <div class="row">
-            <div class="col-md-4" th:each="car: ${cars}">
+            <div class="col-md-4" th:each="car,stat: ${cars.getContent()}">
                 <div class="car-wrap rounded ftco-animate">
                     <div class="img rounded d-flex align-items-end" th:style="'background-image:url('+ @{/static2/images/{image}(image=${car.image})} +');'">
                     </div>
@@ -55,23 +48,7 @@
 
 
         </div>
-<!--        <div class="row mt-5">-->
-<!--            <div class="col text-center">-->
-<!--                <div class="block-27">-->
-<!--                    <ul>-->
-<!--                        <li><a th:if="${currentPage > 1}" th:href="@{'/page/' + ${currentPage - 1}}">&lt;</a></li>-->
-<!--                        <li th:unless="${currentPage > 1}">&lt;</li>-->
-<!--                        <span th:each="i: ${#numbers.sequence(1, totalPages)}">-->
-<!--                        <li>-->
-<!--                            <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a></li>-->
-<!--                            <li class="active"  th:unless="${currentPage != i}"><span>[[${i}]]</span> </li>-->
-<!--                        </span>-->
-<!--                        <li><a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">&gt;</a></li>-->
-<!--                        <li th:unless="${currentPage < totalPages}">&gt;</li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+
     </div>
 </section>
 
@@ -86,23 +63,23 @@
 <!--<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>-->
 
 
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
-<script th:src="@{/js/popper.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/jquery.easing.1.3.js}"></script>
-<script th:src="@{/js/jquery.waypoints.min.js}"></script>
-<script th:src="@{/js/jquery.stellar.min.js}"></script>
-<script th:src="@{/js/owl.carousel.min.js}"></script>
-<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
-<script th:src="@{/js/aos.js}"></script>
-<script th:src="@{/js/jquery.animateNumber.min.js}"></script>
-<script th:src="@{/js/bootstrap-datepicker.js}"></script>
-<script th:src="@{/js/jquery.timepicker.min.js}"></script>
-<script th:src="@{/js/scrollax.min.js}"></script>
+<script th:src="@{/static2/js/jquery.min.js}"></script>
+<script th:src="@{/static2/js/jquery-migrate-3.0.1.min.js}"></script>
+<script th:src="@{/static2/js/popper.min.js}"></script>
+<script th:src="@{/static2/js/bootstrap.min.js}"></script>
+<script th:src="@{/static2/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/static2/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/static2/js/jquery.stellar.min.js}"></script>
+<script th:src="@{/static2/js/owl.carousel.min.js}"></script>
+<script th:src="@{/static2/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/static2/js/aos.js}"></script>
+<script th:src="@{/static2/js/jquery.animateNumber.min.js}"></script>
+<script th:src="@{/static2/js/bootstrap-datepicker.js}"></script>
+<script th:src="@{/static2/js/jquery.timepicker.min.js}"></script>
+<script th:src="@{/static2/js/scrollax.min.js}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-<script th:src="@{/js/google-map.js}"></script>
-<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/static2/js/google-map.js}"></script>
+<script th:src="@{/static2/js/main.js}"></script>
 <script>
     function onSortChange() {
         var urlOption=document.getElementById('basic');
